@@ -1,0 +1,34 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* GPU Card default and responsive widths */
+.gpu-card {
+  width: 100%;
+  max-width: 13rem;
+  transition: transform 0.2s;
+}
+.gpu-card:hover {
+  transform: scale(1.03);
+}
+
+/* Card image padding and size revert */
+.gpu-card img {
+  padding: 0.75rem;
+  object-fit: contain;
+  height: 150px;
+  max-width: 100%;
+}
+
+/* Wider cards on larger screens */
+@media (min-width: 992px) {
+  .gpu-card {
+    max-width: 18rem;
+  }
+}
+@media (min-width: 1200px) {
+  .gpu-card {
+    max-width: 20rem;
+  }
+}
