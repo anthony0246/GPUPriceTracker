@@ -1,19 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 body {
-  background-color: #f8f9fa;
-  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Poppins', sans-serif;
+  color: #333;
 }
 
-/* GPU Card default and responsive widths */
+.app-container {
+  background: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
 .gpu-card {
   width: 100%;
   max-width: 13rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.2s;
 }
-.gpu-card:hover {
-  transform: scale(1.03);
+
+gpu-card:hover {
+  transform: translateY(-4px);
 }
 
-/* Card image padding and size revert */
 .gpu-card img {
   padding: 0.75rem;
   object-fit: contain;
@@ -21,7 +35,13 @@ body {
   max-width: 100%;
 }
 
-/* Wider cards on larger screens */
+.custom-tooltip {
+  background: rgba(255,255,255,0.95);
+  border-radius: 6px;
+  padding: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
 @media (min-width: 992px) {
   .gpu-card {
     max-width: 18rem;
@@ -30,5 +50,11 @@ body {
 @media (min-width: 1200px) {
   .gpu-card {
     max-width: 20rem;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 505px) {
+  .gpu-card {
+    max-width: 16rem;  /* up from 13rem */
   }
 }

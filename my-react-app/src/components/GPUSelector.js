@@ -5,21 +5,18 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { GPU_DATA } from '../data/gpuData';
 
-// Map each model to its company
-const companyMap = {
-  RTX5090: 'NVIDIA',
-  RTX4090: 'NVIDIA',
-  RTX5080: 'NVIDIA',
-  RX7900XT: 'AMD',
-};
+// Helper to insert space after RTX or RX
+const formatModel = (model) =>
+  model.replace(/^RTX/, 'RTX ').replace(/^RX/, 'RX ');
 
 export default function GPUSelector({ options, selected, onToggle, currency, rate }) {
   return options.map((model) => {
-    const company = companyMap[model] || '';
+    const company = model.startsWith('RTX') ? 'NVIDIA' : 'AMD';
     const history = GPU_DATA[model];
     const latest = history[history.length - 1];
     const rawPrice = latest.retail ?? latest.secondHand ?? 0;
-    const displayPrice = currency === 'CAD' ? Math.round(rawPrice * rate) : rawPrice;
+    const displayPrice =
+      currency === 'CAD' ? Math.round(rawPrice * rate) : rawPrice;
     const priceLabel = `${displayPrice} ${currency}`;
 
     return (
@@ -35,8 +32,10 @@ export default function GPUSelector({ options, selected, onToggle, currency, rat
           className="p-2 img-fluid"
         />
         <Card.Body>
-          <Card.Title>{model}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{company}</Card.Subtitle>
+          <Card.Title>{formatModel(model)}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {company}
+          </Card.Subtitle>
           <Card.Text>{priceLabel}</Card.Text>
         </Card.Body>
       </Card>

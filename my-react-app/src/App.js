@@ -7,6 +7,10 @@ import GPUSelector from './components/GPUSelector';
 import PriceChart from './components/PriceChart';
 import { GPU_DATA } from './data/gpuData';
 
+// Helper to insert space after RTX or RX
+const formatModel = (model) =>
+  model.replace(/^RTX/, 'RTX ').replace(/^RX/, 'RX ');
+
 const translations = {
   en: {
     title: 'GPUPriceTracker',
@@ -17,7 +21,7 @@ const translations = {
     secondHand: 'Second‑Hand',
     currency: { USD: 'USD', CAD: 'CAD' },
     toggle: { en: 'EN', fr: 'FR' },
-    chartTitle: (model) => `${model} Pricing — Past 6 months`,
+    chartTitle: (model) => `${formatModel(model)} Pricing — Past 6 months`,
   },
   fr: {
     title: 'SuiviPrixGPU',
@@ -28,7 +32,7 @@ const translations = {
     secondHand: 'Occasion',
     currency: { USD: 'USD', CAD: 'CAD' },
     toggle: { en: 'EN', fr: 'FR' },
-    chartTitle: (model) => `Prix de ${model} — 6 derniers mois`,
+    chartTitle: (model) => `Prix de ${formatModel(model)} — 6 derniers mois`,
   },
 };
 
@@ -48,27 +52,43 @@ function App() {
   };
 
   return (
-    <Container className="py-4">
+    <Container className="py-4 app-container">
       {/* Header & Toggles */}
-      <Row className="align-items-center mb-4">
-        <Col><h1>{t.title}</h1></Col>
-        <Col className="text-end">
-          <ButtonGroup size="sm" className="me-2">
-            <Button variant={lang === 'en' ? 'primary' : 'outline-primary'} onClick={() => setLang('en')}>
-              {t.toggle.en}
-            </Button>
-            <Button variant={lang === 'fr' ? 'primary' : 'outline-primary'} onClick={() => setLang('fr')}>
-              {t.toggle.fr}
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup size="sm">
-            <Button variant={currency === 'USD' ? 'success' : 'outline-success'} onClick={() => setCurrency('USD')}>
-              {t.currency.USD}
-            </Button>
-            <Button variant={currency === 'CAD' ? 'success' : 'outline-success'} onClick={() => setCurrency('CAD')}>
-              {t.currency.CAD}
-            </Button>
-          </ButtonGroup>
+      <Row className="align-items-center justify-content-between mb-4 flex-wrap">
+        <Col xs="auto">
+          <h1 className="mb-0 mb-sm-0">{t.title}</h1>
+        </Col>
+        <Col xs="auto" className="mt-2 mt-sm-0">
+          <div className="d-flex flex-wrap align-items-center gap-2">
+            <ButtonGroup size="sm">
+              <Button
+                variant={lang === 'en' ? 'primary' : 'outline-primary'}
+                onClick={() => setLang('en')}
+              >
+                {t.toggle.en}
+              </Button>
+              <Button
+                variant={lang === 'fr' ? 'primary' : 'outline-primary'}
+                onClick={() => setLang('fr')}
+              >
+                {t.toggle.fr}
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup size="sm">
+              <Button
+                variant={currency === 'USD' ? 'success' : 'outline-success'}
+                onClick={() => setCurrency('USD')}
+              >
+                {t.currency.USD}
+              </Button>
+              <Button
+                variant={currency === 'CAD' ? 'success' : 'outline-success'}
+                onClick={() => setCurrency('CAD')}
+              >
+                {t.currency.CAD}
+              </Button>
+            </ButtonGroup>
+          </div>
         </Col>
       </Row>
 
