@@ -36,7 +36,7 @@ const translations = {
   },
 };
 
-const CONVERSION_RATE = 0.72; // 1 USD = 0.72 CAD
+const CONVERSION_RATE = 1.32; // 1 USD = 1.32 CAD
 
 function App() {
   const [lang, setLang] = useState('en');
@@ -104,6 +104,7 @@ function App() {
           onToggle={handleGPUClick}
           currency={currency}
           rate={CONVERSION_RATE}
+          lang={lang}
         />
       </Row>
 

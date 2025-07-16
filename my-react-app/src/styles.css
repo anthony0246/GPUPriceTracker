@@ -53,7 +53,7 @@ gpu-card:hover {
   }
 }
 
-@media (min-width: 400px) and (max-width: 505px) {
+@media (max-width: 505px) {
   .gpu-card {
     max-width: 16rem;  /* up from 13rem */
   }
