@@ -1,4 +1,5 @@
 // =========================
+// =========================
 // src/components/PriceChart.js
 // =========================
 import React, { useState, useEffect } from 'react';
@@ -37,6 +38,7 @@ export default function PriceChart({
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  // Prepare data with diffs
   const plotData = data.map((row, idx) => {
     const conv = (v) => (v != null ? Math.round((currency === 'CAD' ? v * rate : v)) : 0);
     const rVal = conv(row.retail);
@@ -58,6 +60,7 @@ export default function PriceChart({
     };
   });
 
+  // Tooltip: trend vs diff labels
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -65,14 +68,21 @@ export default function PriceChart({
           <h6>{label}</h6>
           {payload.map((entry) => {
             const { dataKey, color, value } = entry;
-            const isDiffKey = dataKey.endsWith('Diff');
-            const valText = isDiffKey
-              ? `${value} ${currency}`
-              : entry.payload[`${dataKey}Raw`] == null
-              ? unavailableText
-              : `${value} ${currency}`;
+            const isDiffKey = dataKey === 'retailDiff' || dataKey === 'secondDiff';
+            // Determine display text
+            let valText;
+            if (isDiffKey) {
+              valText = `${value} ${currency}`;
+            } else {
+              valText = entry.payload[`${dataKey}Raw`] == null
+                ? unavailableText
+                : `${value} ${currency}`;
+            }
+            // Explicit diffLabels mapping
             const labelText = isDiffKey
-              ? diffLabels[dataKey.replace('Diff','')]
+              ? dataKey === 'retailDiff'
+                ? diffLabels.retail
+                : diffLabels.secondHand
               : labels[dataKey];
             return (
               <p key={dataKey} style={{ color, margin: 0 }}>

@@ -27,8 +27,8 @@ const translations = {
       secondHand: 'Second‑Hand monthly price difference',
     },
     viewToggle: {
-      trend: 'Trend',
-      diff: 'Difference',
+      trend: 'Trends',
+      diff: 'Differences',
     },
     chartTitle: (model) => `${formatModel(model)} Pricing — Past 6 months`,
   },

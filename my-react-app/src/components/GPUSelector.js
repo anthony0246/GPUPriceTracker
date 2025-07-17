@@ -15,12 +15,10 @@ export default function GPUSelector({ options, selected, onToggle, currency, rat
     const history = GPU_DATA[model];
     const latest = history[history.length - 1];
     const rawPrice = latest.retail ?? latest.secondHand ?? 0;
-    const displayPrice =
-      currency === 'CAD' ? Math.round(rawPrice * rate) : rawPrice;
-    const priceLabel =
-      lang === 'en'
-        ? `$${displayPrice} ${currency}`
-        : `${displayPrice}$ ${currency}`;
+    const displayPrice = currency === 'CAD' ? Math.round(rawPrice * rate) : rawPrice;
+    const priceLabel = lang === 'en'
+      ? `$${displayPrice} ${currency}`
+      : `${displayPrice}$ ${currency}`;
 
     return (
       <Card
@@ -31,14 +29,14 @@ export default function GPUSelector({ options, selected, onToggle, currency, rat
       >
         <Card.Img
           variant="top"
+          // Use absolute path from public folder or PUBLIC_URL
           src={`${process.env.PUBLIC_URL}/images/${model}.png`}
+          alt={formatModel(model)}
           className="p-2 img-fluid"
         />
         <Card.Body>
           <Card.Title>{formatModel(model)}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">
-            {company}
-          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">{company}</Card.Subtitle>
           <Card.Text>{priceLabel}</Card.Text>
         </Card.Body>
       </Card>
