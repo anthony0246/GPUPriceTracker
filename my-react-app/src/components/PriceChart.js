@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 import { Card } from 'react-bootstrap';
 
-export default function PriceChart({ model, data, chartTitle, currency, rate, labels }) {
+export default function PriceChart({ model, data, chartTitle, currency, rate, labels, unavailableText }) {
   const plotData = data.map((row) => ({
     month: row.month,
     retail: row.retail != null ? Math.round((currency === 'CAD' ? row.retail * rate : row.retail)) : 0,
@@ -31,7 +31,7 @@ export default function PriceChart({ model, data, chartTitle, currency, rate, la
           {payload.map((entry) => {
             const { dataKey, color } = entry;
             const isNull = entry.payload[`${dataKey}Raw`] == null;
-            const valText = isNull ? 'Not Available' : `${entry.value} ${currency}`;
+            const valText = isNull ? unavailableText : `${entry.value} ${currency}`;
             const labelText = dataKey === 'retail' ? labels.retail : labels.secondHand;
             return (
               <p key={dataKey} style={{ color, margin: 0 }}>

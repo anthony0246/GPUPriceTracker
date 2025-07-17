@@ -21,6 +21,7 @@ const translations = {
     secondHand: 'Second‑Hand',
     currency: { USD: 'USD', CAD: 'CAD' },
     toggle: { en: 'EN', fr: 'FR' },
+    unavailable: 'Not Available',
     chartTitle: (model) => `${formatModel(model)} Pricing — Past 6 months`,
   },
   fr: {
@@ -32,6 +33,7 @@ const translations = {
     secondHand: 'Occasion',
     currency: { USD: 'USD', CAD: 'CAD' },
     toggle: { en: 'EN', fr: 'FR' },
+    unavailable: 'Rupture de stock',
     chartTitle: (model) => `Prix de ${formatModel(model)} — 6 derniers mois`,
   },
 };
@@ -125,6 +127,7 @@ function App() {
             currency={currency}
             rate={CONVERSION_RATE}
             labels={{ retail: t.retail, secondHand: t.secondHand }}
+            unavailableText={t.unavailable}
           />
         ))
       )}

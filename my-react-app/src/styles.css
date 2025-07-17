@@ -42,6 +42,11 @@ gpu-card:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+@media (max-width: 500px) {
+  .gpu-card {
+    max-width: 16rem;
+  }
+}
 @media (min-width: 992px) {
   .gpu-card {
     max-width: 18rem;
@@ -50,11 +55,5 @@ gpu-card:hover {
 @media (min-width: 1200px) {
   .gpu-card {
     max-width: 20rem;
-  }
-}
-
-@media (max-width: 505px) {
-  .gpu-card {
-    max-width: 16rem;  /* up from 13rem */
   }
 }

@@ -9,7 +9,7 @@ import { GPU_DATA } from '../data/gpuData';
 const formatModel = (model) =>
   model.replace(/^RTX/, 'RTX ').replace(/^RX/, 'RX ');
 
-export default function GPUSelector({ options, selected, onToggle, currency, rate, lang}) {
+export default function GPUSelector({ options, selected, onToggle, currency, rate, lang }) {
   return options.map((model) => {
     const company = model.startsWith('RTX') ? 'NVIDIA' : 'AMD';
     const history = GPU_DATA[model];
@@ -17,15 +17,10 @@ export default function GPUSelector({ options, selected, onToggle, currency, rat
     const rawPrice = latest.retail ?? latest.secondHand ?? 0;
     const displayPrice =
       currency === 'CAD' ? Math.round(rawPrice * rate) : rawPrice;
-    let priceLabel;
-    console.log(lang)
-    if (lang === 'en') {
-      priceLabel = '$' + `${displayPrice} ${currency}`;
-    }
-    else {
-      priceLabel = `${displayPrice}` + '$ ' + `${currency}`;
-    }
-
+    const priceLabel =
+      lang === 'en'
+        ? `$${displayPrice} ${currency}`
+        : `${displayPrice}$ ${currency}`;
 
     return (
       <Card
