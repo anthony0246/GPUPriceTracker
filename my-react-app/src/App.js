@@ -22,6 +22,14 @@ const translations = {
     currency: { USD: 'USD', CAD: 'CAD' },
     toggle: { en: 'EN', fr: 'FR' },
     unavailable: 'Not Available',
+    diffLabels: {
+      retail: 'Retail monthly price difference',
+      secondHand: 'Second‑Hand monthly price difference',
+    },
+    viewToggle: {
+      trend: 'Trend',
+      diff: 'Difference',
+    },
     chartTitle: (model) => `${formatModel(model)} Pricing — Past 6 months`,
   },
   fr: {
@@ -34,6 +42,14 @@ const translations = {
     currency: { USD: 'USD', CAD: 'CAD' },
     toggle: { en: 'EN', fr: 'FR' },
     unavailable: 'Rupture de stock',
+    diffLabels: {
+      retail: 'Différence mensuelle (Neuf)',
+      secondHand: 'Différence mensuelle (Occasion)',
+    },
+    viewToggle: {
+      trend: 'Tendances',
+      diff: 'Différences',
+    },
     chartTitle: (model) => `Prix de ${formatModel(model)} — 6 derniers mois`,
   },
 };
@@ -127,7 +143,12 @@ function App() {
             currency={currency}
             rate={CONVERSION_RATE}
             labels={{ retail: t.retail, secondHand: t.secondHand }}
+            diffLabels={{
+              retail: t.diffLabels.retail,
+              secondHand: t.diffLabels.secondHand,
+            }}
             unavailableText={t.unavailable}
+            viewToggle={t.viewToggle}
           />
         ))
       )}

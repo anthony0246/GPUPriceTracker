@@ -31,7 +31,7 @@ export default function GPUSelector({ options, selected, onToggle, currency, rat
       >
         <Card.Img
           variant="top"
-          src={`/images/${model}.png`}
+          src={`${process.env.PUBLIC_URL}/images/${model}.png`}
           className="p-2 img-fluid"
         />
         <Card.Body>
