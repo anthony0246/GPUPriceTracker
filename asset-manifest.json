@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/GPUPriceTracker/static/css/main.760f2908.css",
-    "main.js": "/GPUPriceTracker/static/js/main.54d9a46b.js",
+    "main.js": "/GPUPriceTracker/static/js/main.a5f643af.js",
     "static/js/453.d8e2a990.chunk.js": "/GPUPriceTracker/static/js/453.d8e2a990.chunk.js",
     "index.html": "/GPUPriceTracker/index.html",
     "main.760f2908.css.map": "/GPUPriceTracker/static/css/main.760f2908.css.map",
-    "main.54d9a46b.js.map": "/GPUPriceTracker/static/js/main.54d9a46b.js.map",
+    "main.a5f643af.js.map": "/GPUPriceTracker/static/js/main.a5f643af.js.map",
     "453.d8e2a990.chunk.js.map": "/GPUPriceTracker/static/js/453.d8e2a990.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.760f2908.css",
-    "static/js/main.54d9a46b.js"
+    "static/js/main.a5f643af.js"
   ]
 }
