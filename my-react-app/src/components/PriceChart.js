@@ -1,5 +1,4 @@
 // =========================
-// =========================
 // src/components/PriceChart.js
 // =========================
 import React, { useState, useEffect } from 'react';
@@ -27,6 +26,7 @@ export default function PriceChart({
   diffLabels,
   unavailableText,
   viewToggle,
+  locale,
 }) {
   const [view, setView] = useState('trend');
   const [isNarrow, setIsNarrow] = useState(false);
@@ -38,29 +38,28 @@ export default function PriceChart({
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Prepare data with diffs
   const plotData = data.map((row, idx) => {
     const conv = (v) => (v != null ? Math.round((currency === 'CAD' ? v * rate : v)) : 0);
     const rVal = conv(row.retail);
     const sVal = conv(row.secondHand);
-    let rDiff = 0, sDiff = 0;
-    if (idx > 0) {
-      const prev = data[idx - 1];
-      rDiff = rVal - conv(prev.retail);
-      sDiff = sVal - conv(prev.secondHand);
-    }
+    const prev = idx > 0 ? data[idx - 1] : { retail: null, secondHand: null };
     return {
       month: row.month,
       retail: rVal,
       secondHand: sVal,
-      retailDiff: rDiff,
-      secondDiff: sDiff,
+      retailDiff: idx > 0 ? rVal - conv(prev.retail) : 0,
+      secondDiff: idx > 0 ? sVal - conv(prev.secondHand) : 0,
       retailRaw: row.retail,
       secondHandRaw: row.secondHand,
     };
   });
 
-  // Tooltip: trend vs diff labels
+  // Format month labels based on locale
+  const formatMonth = (m) => {
+    const d = new Date(Date.parse(`1 ${m}`));
+    return new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' }).format(d);
+  };
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -68,21 +67,14 @@ export default function PriceChart({
           <h6>{label}</h6>
           {payload.map((entry) => {
             const { dataKey, color, value } = entry;
-            const isDiffKey = dataKey === 'retailDiff' || dataKey === 'secondDiff';
-            // Determine display text
-            let valText;
-            if (isDiffKey) {
-              valText = `${value} ${currency}`;
-            } else {
-              valText = entry.payload[`${dataKey}Raw`] == null
-                ? unavailableText
-                : `${value} ${currency}`;
-            }
-            // Explicit diffLabels mapping
+            const isDiffKey = dataKey.endsWith('Diff');
+            const valText = isDiffKey
+              ? `${value} ${currency}`
+              : entry.payload[`${dataKey}Raw`] == null
+              ? unavailableText
+              : `${value} ${currency}`;
             const labelText = isDiffKey
-              ? dataKey === 'retailDiff'
-                ? diffLabels.retail
-                : diffLabels.secondHand
+              ? diffLabels[dataKey.replace('Diff', '')]
               : labels[dataKey];
             return (
               <p key={dataKey} style={{ color, margin: 0 }}>
@@ -126,7 +118,7 @@ export default function PriceChart({
           {view === 'trend' ? (
             <LineChart data={plotData} margin={{ top: 20, right: 30, bottom: 5, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="month" tickFormatter={formatMonth} />
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="bottom" wrapperStyle={{ marginTop: isNarrow ? 16 : 0 }} />
@@ -136,7 +128,7 @@ export default function PriceChart({
           ) : (
             <BarChart data={plotData} margin={{ top: 20, right: 30, bottom: 5, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="month" tickFormatter={formatMonth} />
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="bottom" wrapperStyle={{ marginTop: isNarrow ? 16 : 0 }} />

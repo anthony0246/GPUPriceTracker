@@ -27,8 +27,8 @@ const translations = {
       secondHand: 'Second‑Hand monthly price difference',
     },
     viewToggle: {
-      trend: 'Trends',
-      diff: 'Differences',
+      trend: 'Trend',
+      diff: 'Difference',
     },
     chartTitle: (model) => `${formatModel(model)} Pricing — Past 6 months`,
   },
@@ -47,14 +47,14 @@ const translations = {
       secondHand: 'Différence mensuelle (Occasion)',
     },
     viewToggle: {
-      trend: 'Tendances',
-      diff: 'Différences',
+      trend: 'Tendance',
+      diff: 'Différence',
     },
     chartTitle: (model) => `Prix de ${formatModel(model)} — 6 derniers mois`,
   },
 };
 
-const CONVERSION_RATE = 1.32; // 1 USD = 1.32 CAD
+const CONVERSION_RATE = 1.32;
 
 function App() {
   const [lang, setLang] = useState('en');
@@ -71,10 +71,10 @@ function App() {
 
   return (
     <Container className="py-4 app-container">
-      {/* Header & Toggles */}
+      {/* Header */}
       <Row className="align-items-center justify-content-between mb-4 flex-wrap">
         <Col xs="auto">
-          <h1 className="mb-0 mb-sm-0">{t.title}</h1>
+          <h1 className="mb-0">{t.title}</h1>
         </Col>
         <Col xs="auto" className="mt-2 mt-sm-0">
           <div className="d-flex flex-wrap align-items-center gap-2">
@@ -110,11 +110,9 @@ function App() {
         </Col>
       </Row>
 
-      {/* Intro Text */}
       <p className="lead text-center">{t.subtitle}</p>
       <p className="text-center">{t.instruction}</p>
 
-      {/* GPU Selector Cards */}
       <Row className="justify-content-center mb-4">
         <GPUSelector
           options={Object.keys(GPU_DATA)}
@@ -126,7 +124,6 @@ function App() {
         />
       </Row>
 
-      {/* Placeholder or Charts */}
       {selected.length === 0 ? (
         <Row className="justify-content-center">
           <Col md={8}>
@@ -143,12 +140,10 @@ function App() {
             currency={currency}
             rate={CONVERSION_RATE}
             labels={{ retail: t.retail, secondHand: t.secondHand }}
-            diffLabels={{
-              retail: t.diffLabels.retail,
-              secondHand: t.diffLabels.secondHand,
-            }}
+            diffLabels={{ retail: t.diffLabels.retail, secondHand: t.diffLabels.secondHand }}
             unavailableText={t.unavailable}
             viewToggle={t.viewToggle}
+            locale={lang}
           />
         ))
       )}
